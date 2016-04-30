@@ -3,10 +3,11 @@ var h = getHeight();
 var speed = 10;
 var context;
 
-function ball(text, user, likes) {
+function ball(text, user, likes, followers) {
     this.txt = text;
     this.user = user;
     this.likes = likes;
+    this.followers = followers;
     this.area = Math.PI * likes * likes;
     this.time = 0;
     var bCols = ["#99e6ff", "#80ccff", "#66a3ff", "#4d4dff", "#0040ff"];
@@ -30,6 +31,8 @@ function ball(text, user, likes) {
 }
 
 function init() {
+  myCanvas.width = w;
+  myCanvas.height = h;
   context= myCanvas.getContext('2d');
   drawMultiple(5);
 }
