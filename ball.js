@@ -34,17 +34,36 @@ function init() {
   myCanvas.width = w;
   myCanvas.height = h;
   context= myCanvas.getContext('2d');
-  drawMultiple(5);
+  drawMultiple(4);
 }
 
 function drawMultiple(n) {
     var arr = [];
-    var bal = new ball("random txt", "naga", Math.floor(Math.random() * 100) + 50);
     for (var i = 0; i < n; i++) {
-        var bal = new ball("random txt", "naga", Math.floor(Math.random() * 100) + 50);
-        arr.push(bal);
+        var radius = Math.floor(Math.random() * 100) + 50;
+        var b = new ball("random txt", "naga", radius, 22);
+        while (!checkValidPos(b, arr)) {
+            newPos(ball);
+        }
+        arr.push(b);
     }
-    setInterval(draw,speed,arr);
+    setInterval(draw, speed, arr);
+}
+
+function newPos(ball) {
+    ball.x = Math.floor(Math.random() * (w - (2 * ball.likes)) + ball.likes);
+    ball.y = Math.floor(Math.random() * (h - (2 * ball.likes)) + ball.likes);
+    alert(ball.x);
+}
+
+function checkValidPos(b1, arr) {
+    for (var i = 0; i < arr.length; i++) {
+        var b2 = arr[i];
+        if (overlaps(b1, b2)) {
+            return false;
+        }
+    }
+    return true;
 }
 
 function draw(arr) {
@@ -73,17 +92,14 @@ function bounce(arr, i) {
     for (var j = 0; j < arr.length; j++) {
         if (i != j) {
             var b2 = arr[j];
-            intersect(b1, b2);
+            makeBounce(b1, b2);
         }
     }
 }
 
-function intersect(b1, b2) {
-    if (b1.x + b1.likes + b2.likes > b2.x
-        && b1.x < b2.x + b1.likes + b2.likes
-        && b1.y + b1.likes + b2.likes > b2.y
-        && b1.y < b2.y + b1.likes + b2.likes) {
-           var dist = Math.sqrt(((b1.x - b2.x) * (b1.x - b2.x)) + ((b1.y - b2.y) * (b1.y - b2.y)));
+function makeBounce(b1, b2) {
+    if (intersects(b1, b2)) {
+           var dist = distance(b1, b2);
            if (dist < b1.likes + b2.likes) {
                var tempx = b1.dx;
                var tempy = b1.dy;
@@ -93,6 +109,28 @@ function intersect(b1, b2) {
                b2.dy = tempy;
            }
     }
+}
+
+function distance(b1, b2) {
+    return Math.sqrt(((b1.x - b2.x) * (b1.x - b2.x)) + ((b1.y - b2.y) * (b1.y - b2.y)));
+}
+
+function overlaps(b1, b2) {
+    var dist = distance(b1, b2);
+    if (dist <= b1.likes + b2.likes) {
+        return true;
+    }
+    return false;
+}
+
+function intersects(b1, b2) {
+    if (b1.x + b1.likes + b2.likes > b2.x
+        && b1.x < b2.x + b1.likes + b2.likes
+        && b1.y + b1.likes + b2.likes > b2.y
+        && b1.y < b2.y + b1.likes + b2.likes) {
+            return true;
+    }
+    return false;
 }
 
 function getWidth() {
@@ -122,6 +160,3 @@ function getHeight() {
     return document.body.clientHeight;
   }
 }
-
-// Ball sizes
-// size is fixed on creation
