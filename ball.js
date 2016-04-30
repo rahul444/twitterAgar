@@ -1,5 +1,5 @@
 var w = getWidth();
-var h = getHeight();
+var h = Math.floor(0.92 * getHeight());
 var speed = 10;
 var context;
 
