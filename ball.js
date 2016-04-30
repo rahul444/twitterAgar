@@ -43,7 +43,7 @@ function drawMultiple(n) {
         var radius = Math.floor(Math.random() * 100) + 50;
         var b = new ball("random txt", "naga", radius, 22);
         while (!checkValidPos(b, arr)) {
-            newPos(ball);
+            newPos(b);
         }
         arr.push(b);
     }
@@ -53,7 +53,6 @@ function drawMultiple(n) {
 function newPos(ball) {
     ball.x = Math.floor(Math.random() * (w - (2 * ball.likes)) + ball.likes);
     ball.y = Math.floor(Math.random() * (h - (2 * ball.likes)) + ball.likes);
-    alert(ball.x);
 }
 
 function checkValidPos(b1, arr) {
