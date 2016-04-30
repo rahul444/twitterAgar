@@ -31,7 +31,7 @@ function ball(text, user, likes) {
 
 function init() {
   context= myCanvas.getContext('2d');
-  drawMultiple(3);
+  drawMultiple(5);
 }
 
 function drawMultiple(n) {
@@ -82,10 +82,12 @@ function intersect(b1, b2) {
         && b1.y < b2.y + b1.likes + b2.likes) {
            var dist = Math.sqrt(((b1.x - b2.x) * (b1.x - b2.x)) + ((b1.y - b2.y) * (b1.y - b2.y)));
            if (dist < b1.likes + b2.likes) {
-               b1.dx = -b1.dx;
-               b2.dx = -b2.dx;
-               b1.dy = -b1.dy;
-               b2.dy = -b2.dy;
+               var tempx = b1.dx;
+               var tempy = b1.dy;
+               b1.dx = b2.dx;
+               b2.dx = tempx;
+               b1.dy = b2.dy;
+               b2.dy = tempy;
            }
     }
 }
