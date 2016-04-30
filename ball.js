@@ -1,6 +1,6 @@
 var w = getWidth();
 var h = Math.floor(0.92 * getHeight());
-var speed = 10;
+var speed = 40;
 var context;
 
 function ball(text, user, likes, followers) {
@@ -34,7 +34,7 @@ function init() {
   myCanvas.width = w;
   myCanvas.height = h;
   context= myCanvas.getContext('2d');
-  drawMultiple(4);
+  drawMultiple(10);
 }
 
 function drawMultiple(n) {
